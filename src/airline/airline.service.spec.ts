@@ -138,4 +138,9 @@ describe('AirlineService', () => {
         const deletedAirline: AirlineEntity = await repository.findOne({ where: { id: airline.id } });
         expect(deletedAirline).toBeNull();
     });
+
+    it('delete should throw an exception for an invalid airline id', async () => {
+        await expect(() => service.delete('0'))
+            .rejects.toHaveProperty("message", "The airline with the given id was not found");
+    });
 });
