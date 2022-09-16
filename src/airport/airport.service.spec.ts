@@ -56,4 +56,9 @@ describe('AirportService', () => {
         expect(airport.country).toEqual(storedairport.country);
         expect(airport.city).toEqual(storedairport.city);
     });
+
+    it('findOne should throw an exception for an invalid airport id', async () => {
+        await expect(() => service.findOne('0'))
+            .rejects.toHaveProperty("message", "The airport with the given id was not found");
+    });
 });
