@@ -44,5 +44,7 @@ export class AirportService {
     }
 
     async delete(id: string) {
+        const airport: AirportEntity = await this.airportRepository.findOne({ where: { id } });
+        await this.airportRepository.remove(airport);
     }
 }
