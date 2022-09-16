@@ -1,4 +1,4 @@
-import { AirportEntity } from 'src/airport/airport.entity';
+import { AirportEntity } from '../airport/airport.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
 
 @Entity()
