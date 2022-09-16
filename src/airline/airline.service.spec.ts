@@ -56,4 +56,9 @@ describe('AirlineService', () => {
         expect(airline.foundationDate).toEqual(storedAirline.foundationDate);
         expect(airline.webPage).toEqual(storedAirline.webPage);
     });
+
+    it('findOne should throw an exception for an invalid airline', async () => { 
+        await expect(() => service.findOne('0'))
+            .rejects.toHaveProperty("message", "The airline with the given id was not found");
+    });
 });
