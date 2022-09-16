@@ -16,7 +16,13 @@ export class AirlineAirportService {
     ) { }
 
     async addAirportToAirline(airlineId: string, airportId: string): Promise<AirlineEntity> {
-        return null;
+        const airport: AirportEntity = await this.airportRepository.findOne({ where: { id: airportId } });
+
+        const airline: AirlineEntity = await this.airlineRepository.findOne({ where: { id: airlineId }, relations: ["airports"] });
+
+        airline.airports = [...airline.airports, airport];
+
+        return await this.airlineRepository.save(airline);
     }
 
 }

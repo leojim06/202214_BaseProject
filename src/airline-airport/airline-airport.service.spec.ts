@@ -77,9 +77,9 @@ describe('AirlineAirportService', () => {
 
         expect(result.airports.length).toBe(1);
         expect(result.airports[0]).not.toBeNull();
-        expect(result.airports[0].name).toBe(newAirport.name)
-        expect(result.airports[0].code).toBe(newAirport.code)
-        expect(result.airports[0].country).toBe(newAirport.country)
-        expect(result.airports[0].city).toBe(newAirport.city)
+        expect(result.airports[0].name).toBe(newAirport.name);
+        expect(result.airports[0].code).toBe(newAirport.code);
+        expect(result.airports[0].country).toBe(newAirport.country);
+        expect(result.airports[0].city).toBe(newAirport.city);
     });
 });
