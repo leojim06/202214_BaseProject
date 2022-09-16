@@ -24,6 +24,6 @@ export class AirportService {
     }
 
     async create(airport: AirportEntity): Promise<AirportEntity> {
-        return null;
+        return await this.airportRepository.save(airport);
     }
 }
