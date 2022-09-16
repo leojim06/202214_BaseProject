@@ -46,4 +46,14 @@ describe('AirlineService', () => {
         expect(airlines).not.toBeNull();
         expect(airlines).toHaveLength(airlineList.length);
     });
+
+    it('findOne should return an airline by id', async ()=>{
+        const storedAirline: AirlineEntity = airlineList[0];
+        const airline: AirlineEntity = await service.findOne(storedAirline.id);
+        expect(airline).not.toBeNull();
+        expect(airline.name).toEqual(storedAirline.name);
+        expect(airline.description).toEqual(storedAirline.description);
+        expect(airline.foundationDate).toEqual(storedAirline.foundationDate);
+        expect(airline.webPage).toEqual(storedAirline.webPage);
+    });
 });
