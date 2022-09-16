@@ -47,7 +47,7 @@ describe('AirlineService', () => {
         expect(airlines).toHaveLength(airlineList.length);
     });
 
-    it('findOne should return an airline by id', async ()=>{
+    it('findOne should return an airline by id', async () => {
         const storedAirline: AirlineEntity = airlineList[0];
         const airline: AirlineEntity = await service.findOne(storedAirline.id);
         expect(airline).not.toBeNull();
@@ -57,8 +57,29 @@ describe('AirlineService', () => {
         expect(airline.webPage).toEqual(storedAirline.webPage);
     });
 
-    it('findOne should throw an exception for an invalid airline', async () => { 
+    it('findOne should throw an exception for an invalid airline', async () => {
         await expect(() => service.findOne('0'))
             .rejects.toHaveProperty("message", "The airline with the given id was not found");
+    });
+
+    it('create should return a new museum', async () => {
+        const airline: AirlineEntity = {
+            id: "",
+            name: faker.company.name(),
+            description: faker.lorem.sentence(),
+            foundationDate: faker.date.past(),
+            webPage: faker.internet.url(),
+            airports: [],
+        }
+
+        const newAirline: AirlineEntity = await service.create(airline);
+        expect(newAirline).not.toBeNull();
+
+        const storedAirline: AirlineEntity = await repository.findOne({ where: { id: newAirline.id } })
+        expect(storedAirline).not.toBeNull();
+        expect(storedAirline.name).toEqual(newAirline.name);
+        expect(storedAirline.description).toEqual(newAirline.description);
+        expect(storedAirline.foundationDate).toEqual(newAirline.foundationDate);
+        expect(storedAirline.webPage).toEqual(newAirline.webPage);
     });
 });
