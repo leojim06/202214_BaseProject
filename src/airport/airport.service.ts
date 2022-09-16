@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { BusinessError, BusinessLogicException } from '../shared/errors/business-errors';
 import { Repository } from 'typeorm';
 import { AirportEntity } from './airport.entity';
 
@@ -17,6 +18,8 @@ export class AirportService {
 
     async findOne(id: string): Promise<AirportEntity> {
         const airport: AirportEntity = await this.airportRepository.findOne({ where: { id }, relations: ["airlines"] });
+        if (!airport)
+            throw new BusinessLogicException("The airport with the given id was not found", BusinessError.NOT_FOUND);
         return airport;
     }
 
