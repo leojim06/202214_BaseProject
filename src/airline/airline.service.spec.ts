@@ -121,4 +121,14 @@ describe('AirlineService', () => {
         await expect(() => service.update('0', airline))
             .rejects.toHaveProperty("message", "The airline with the given id was not found");
     });
+
+    it('update should throw an exception for an invalid airline foundation date', async () => {
+        let airline: AirlineEntity = airlineList[0];
+        airline = {
+            ...airline, foundationDate: faker.date.future()
+        };
+
+        await expect(() => service.update(airline.id, airline))
+            .rejects.toHaveProperty("message", "The foundation date is incorrect");
+    });
 });
