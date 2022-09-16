@@ -37,8 +37,13 @@ describe('AirportService', () => {
         }
     };
 
-
     it('should be defined', () => {
         expect(service).toBeDefined();
+    });
+
+    it('findAll should return all airports', async () => {
+        const airports: AirportEntity[] = await service.findAll();
+        expect(airports).not.toBeNull();
+        expect(airports).toHaveLength(airportList.length);
     });
 });

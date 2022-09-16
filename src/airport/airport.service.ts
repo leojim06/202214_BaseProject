@@ -11,4 +11,8 @@ export class AirportService {
         private readonly airportRepository: Repository<AirportEntity>
     ) { }
 
+    async findAll(): Promise<AirportEntity[]> {
+        return null;
+    }
+
 }
