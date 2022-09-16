@@ -132,10 +132,15 @@ describe('AirportService', () => {
             .rejects.toHaveProperty("message", "The airport code is incorrect");
     });
 
-    it('delete should remove an airport', async () => { 
+    it('delete should remove an airport', async () => {
         const airport: AirportEntity = airportList[0];
         await service.delete(airport.id);
         const deletedAirport: AirportEntity = await repository.findOne({ where: { id: airport.id } });
         expect(deletedAirport).toBeNull();
+    });
+
+    it('delete should throw an exception for an invalid airport id', async () => {
+        await expect(() => service.delete('0 '))
+            .rejects.toHaveProperty("message", "The airport with the given id was not found");
     });
 });
