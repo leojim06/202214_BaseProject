@@ -30,8 +30,10 @@ export class AirlineService {
         return await this.airlineRepository.save(airline);
     }
 
-    async update(id: string, airline: AirlineEntity): Promise<AirlineEntity> { 
-        return null;
+    async update(id: string, airline: AirlineEntity): Promise<AirlineEntity> {
+        const persistedAirline: AirlineEntity = await this.airlineRepository.findOne({ where: { id } });
+        airline.id = persistedAirline.id;
+        return await this.airlineRepository.save(airline);
     }
 
 }
