@@ -44,7 +44,8 @@ export class AirlineService {
     }
 
     async delete(id: string) {
-        return null;
+        const airline: AirlineEntity = await this.airlineRepository.findOne({ where: { id } });
+        await this.airlineRepository.remove(airline);
     }
 
 }
