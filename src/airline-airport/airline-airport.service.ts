@@ -20,11 +20,12 @@ export class AirlineAirportService {
         const airport: AirportEntity = await this.airportRepository.findOne({ where: { id: airportId } });
         if (!airport)
             throw new BusinessLogicException("The airport with the given id was not found", BusinessError.NOT_FOUND);
-            
+
         const airline: AirlineEntity = await this.airlineRepository.findOne({ where: { id: airlineId }, relations: ["airports"] });
+        if (!airline)
+            throw new BusinessLogicException("The airline with the given id was not found", BusinessError.NOT_FOUND);
 
         airline.airports = [...airline.airports, airport];
-
         return await this.airlineRepository.save(airline);
     }
 
