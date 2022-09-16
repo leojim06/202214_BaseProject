@@ -24,7 +24,7 @@ export class AirlineService {
     }
 
     async create(airline: AirlineEntity): Promise<AirlineEntity> {
-        return null;
+        return await this.airlineRepository.save(airline);
     }
 
 }
