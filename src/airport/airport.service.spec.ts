@@ -111,4 +111,14 @@ describe('AirportService', () => {
         expect(storedAirline.name).toEqual(airport.name);
         expect(storedAirline.country).toEqual(airport.country);
     });
+
+    it('update should throw an exception for an invalid airport id', async () => {
+        let airport: AirportEntity = airportList[0];
+        airport = {
+            ...airport, name: "New name", country: "New country name"
+        };
+
+        await expect(() => service.update('0', airport))
+            .rejects.toHaveProperty("message", "The airport with the given id was not found");
+    });
 });
