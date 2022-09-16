@@ -7,6 +7,8 @@ import { AirportEntity } from './airport.entity';
 @Injectable()
 export class AirportService {
 
+    private readonly airportCodeValidator = new RegExp(/^[A-Z]{3}$/)
+
     constructor(
         @InjectRepository(AirportEntity)
         private readonly airportRepository: Repository<AirportEntity>
@@ -24,6 +26,8 @@ export class AirportService {
     }
 
     async create(airport: AirportEntity): Promise<AirportEntity> {
+        if(!this.airportCodeValidator.test(airport.code))
+            throw new BusinessLogicException("The airport code is incorrect", BusinessError.BAD_REQUEST)
         return await this.airportRepository.save(airport);
     }
 }
