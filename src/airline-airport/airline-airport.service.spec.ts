@@ -82,4 +82,17 @@ describe('AirlineAirportService', () => {
         expect(result.airports[0].country).toBe(newAirport.country);
         expect(result.airports[0].city).toBe(newAirport.city);
     });
+
+    it('addAirportToAirline should throw an exception for an invalid airport', async () => { 
+        const newAirline: AirlineEntity = await airlineRepository.save({
+            name: faker.company.name(),
+            description: faker.lorem.sentence(),
+            foundationDate: faker.date.past(),
+            webPage: faker.internet.url(),
+            airports: [],
+        });
+
+        await expect(() => service.addAirportToAirline(newAirline.id, '0'))
+            .rejects.toHaveProperty("message", "The airport with the given id was not found");
+    });
 });
