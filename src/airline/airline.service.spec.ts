@@ -131,4 +131,11 @@ describe('AirlineService', () => {
         await expect(() => service.update(airline.id, airline))
             .rejects.toHaveProperty("message", "The foundation date is incorrect");
     });
+
+    it('delete should remove an airline', async () => {
+        const airline: AirlineEntity = airlineList[0];
+        await service.delete(airline.id);
+        const deletedAirline: AirlineEntity = await repository.findOne({ where: { id: airline.id } });
+        expect(deletedAirline).toBeNull();
+    });
 });

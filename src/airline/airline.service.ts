@@ -43,4 +43,8 @@ export class AirlineService {
         return await this.airlineRepository.save(airline);
     }
 
+    async delete(id: string) {
+        return null;
+    }
+
 }
