@@ -15,4 +15,8 @@ export class AirportService {
         return await this.airportRepository.find({ relations: ["airlines"] });
     }
 
+    async findOne(id: string): Promise<AirportEntity> {
+        return null;
+    }
+
 }
