@@ -83,7 +83,7 @@ describe('AirportService', () => {
         expect(storedAirport.city).toEqual(newAirport.city);
     });
     
-    it('create should throw an exception for an invalid airline foundation date', async () => {
+    it('create should throw an exception for an invalid airport code', async () => {
         const airport: AirportEntity = {
             id: "",
             name: faker.company.name(),
@@ -120,5 +120,15 @@ describe('AirportService', () => {
 
         await expect(() => service.update('0', airport))
             .rejects.toHaveProperty("message", "The airport with the given id was not found");
+    });
+
+    it('should throw an exception for an invalid airport code', async () => {
+        let airport: AirportEntity = airportList[0];
+        airport = {
+            ...airport, code: "ABCDEFG"
+        };
+
+        await expect(() => service.update(airport.id, airport))
+            .rejects.toHaveProperty("message", "The airport code is incorrect");
     });
 });
