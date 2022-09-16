@@ -32,6 +32,8 @@ export class AirportService {
     }
 
     async update(id: string, airport: AirportEntity): Promise<AirportEntity> {
-        return null;
+        const persistedAirport: AirportEntity = await this.airportRepository.findOne({ where: { id } });
+        airport.id = persistedAirport.id;
+        return await this.airportRepository.save(airport);
     }
 }
