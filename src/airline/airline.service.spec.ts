@@ -82,4 +82,18 @@ describe('AirlineService', () => {
         expect(storedAirline.foundationDate).toEqual(newAirline.foundationDate);
         expect(storedAirline.webPage).toEqual(newAirline.webPage);
     });
+
+    it('create should throw an exception for an invalid airline foundation date', async () => {
+        const airline: AirlineEntity = {
+            id: "",
+            name: faker.company.name(),
+            description: faker.lorem.sentence(),
+            foundationDate: faker.date.future(),
+            webPage: faker.internet.url(),
+            airports: [],
+        }
+
+        await expect(() => service.create(airline))
+            .rejects.toHaveProperty("message", "The foundation date is incorrect") ;
+    });
 });
