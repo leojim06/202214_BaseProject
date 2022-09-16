@@ -30,4 +30,8 @@ export class AirlineService {
         return await this.airlineRepository.save(airline);
     }
 
+    async update(id: string, airline: AirlineEntity): Promise<AirlineEntity> { 
+        return null;
+    }
+
 }

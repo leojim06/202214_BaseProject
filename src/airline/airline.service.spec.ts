@@ -94,6 +94,21 @@ describe('AirlineService', () => {
         }
 
         await expect(() => service.create(airline))
-            .rejects.toHaveProperty("message", "The foundation date is incorrect") ;
+            .rejects.toHaveProperty("message", "The foundation date is incorrect");
+    });
+
+    it('update should modify an airline', async () => {
+        let airline: AirlineEntity = airlineList[0];
+        airline = {
+            ...airline, name: "New name", description: "New description"
+        };
+
+        const updatedAirline: AirlineEntity = await service.update(airline.id, airline);
+        expect(updatedAirline).not.toBeNull();
+
+        const storedAirline: AirlineEntity = await repository.findOne({ where: { id: airline.id } });
+        expect(storedAirline).not.toBeNull();
+        expect(storedAirline.name).toEqual(airline.name);
+        expect(storedAirline.description).toEqual(airline.description);
     });
 });
