@@ -61,4 +61,25 @@ describe('AirportService', () => {
         await expect(() => service.findOne('0'))
             .rejects.toHaveProperty("message", "The airport with the given id was not found");
     });
+
+    it('create should return a new airport', async () => {
+        const airport: AirportEntity = {
+            id: "",
+            name: faker.company.name(),
+            code: faker.address.countryCode('alpha-3'),
+            country: faker.address.country(),
+            city: faker.address.cityName(),
+            airlines: []
+        }
+
+        const newAirport: AirportEntity = await service.create(airport);
+        expect(newAirport).not.toBeNull();
+
+        const storedAirport: AirportEntity = await repository.findOne({ where: { id: newAirport.id } })
+        expect(storedAirport).not.toBeNull();
+        expect(storedAirport.name).toEqual(newAirport.name);
+        expect(storedAirport.code).toEqual(newAirport.code);
+        expect(storedAirport.country).toEqual(newAirport.country);
+        expect(storedAirport.city).toEqual(newAirport.city);
+    });
 });

@@ -23,4 +23,7 @@ export class AirportService {
         return airport;
     }
 
+    async create(airport: AirportEntity): Promise<AirportEntity> {
+        return null;
+    }
 }

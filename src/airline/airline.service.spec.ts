@@ -62,7 +62,7 @@ describe('AirlineService', () => {
             .rejects.toHaveProperty("message", "The airline with the given id was not found");
     });
 
-    it('create should return a new museum', async () => {
+    it('create should return a new airline', async () => {
         const airline: AirlineEntity = {
             id: "",
             name: faker.company.name(),
