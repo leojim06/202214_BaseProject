@@ -24,6 +24,9 @@ export class AirlineService {
     }
 
     async create(airline: AirlineEntity): Promise<AirlineEntity> {
+        const today = new Date();
+        if (new Date(airline.foundationDate).getTime() > today.getTime())
+            throw new BusinessLogicException("The foundation date is incorrect", BusinessError.BAD_REQUEST)
         return await this.airlineRepository.save(airline);
     }
 
