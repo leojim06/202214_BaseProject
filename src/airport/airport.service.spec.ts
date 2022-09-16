@@ -96,4 +96,19 @@ describe('AirportService', () => {
         await expect(() => service.create(airport))
             .rejects.toHaveProperty("message", "The airport code is incorrect");
     });
+
+    it('update should modify an airport', async () => { 
+        let airport: AirportEntity = airportList[0];
+        airport = {
+            ...airport, name: "New name", country: "New country name"
+        };
+
+        const updatedAirport: AirportEntity = await service.update(airport.id, airport);
+        expect(updatedAirport).not.toBeNull();
+
+        const storedAirline: AirportEntity = await repository.findOne({ where: { id: airport.id } });
+        expect(storedAirline).not.toBeNull();
+        expect(storedAirline.name).toEqual(airport.name);
+        expect(storedAirline.country).toEqual(airport.country);
+    });
 });

@@ -26,8 +26,12 @@ export class AirportService {
     }
 
     async create(airport: AirportEntity): Promise<AirportEntity> {
-        if(!this.airportCodeValidator.test(airport.code))
+        if (!this.airportCodeValidator.test(airport.code))
             throw new BusinessLogicException("The airport code is incorrect", BusinessError.BAD_REQUEST)
         return await this.airportRepository.save(airport);
+    }
+
+    async update(id: string, airport: AirportEntity): Promise<AirportEntity> {
+        return null;
     }
 }
