@@ -82,4 +82,18 @@ describe('AirportService', () => {
         expect(storedAirport.country).toEqual(newAirport.country);
         expect(storedAirport.city).toEqual(newAirport.city);
     });
+    
+    it('create should throw an exception for an invalid airline foundation date', async () => {
+        const airport: AirportEntity = {
+            id: "",
+            name: faker.company.name(),
+            code: "ABCDEFG",
+            country: faker.address.country(),
+            city: faker.address.cityName(),
+            airlines: []
+        }
+
+        await expect(() => service.create(airport))
+            .rejects.toHaveProperty("message", "The airport code is incorrect");
+    });
 });
