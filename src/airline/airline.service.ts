@@ -31,9 +31,14 @@ export class AirlineService {
     }
 
     async update(id: string, airline: AirlineEntity): Promise<AirlineEntity> {
+        const today = new Date();
+        if (new Date(airline.foundationDate).getTime() > today.getTime())
+            throw new BusinessLogicException("The foundation date is incorrect", BusinessError.BAD_REQUEST)
+
         const persistedAirline: AirlineEntity = await this.airlineRepository.findOne({ where: { id } });
         if (!persistedAirline)
             throw new BusinessLogicException("The airline with the given id was not found", BusinessError.NOT_FOUND)
+
         airline.id = persistedAirline.id;
         return await this.airlineRepository.save(airline);
     }
