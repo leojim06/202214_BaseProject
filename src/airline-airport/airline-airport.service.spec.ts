@@ -83,7 +83,7 @@ describe('AirlineAirportService', () => {
         expect(result.airports[0].city).toBe(newAirport.city);
     });
 
-    it('addAirportToAirline should throw an exception for an invalid airport', async () => { 
+    it('addAirportToAirline should throw an exception for an invalid airport', async () => {
         const newAirline: AirlineEntity = await airlineRepository.save({
             name: faker.company.name(),
             description: faker.lorem.sentence(),
@@ -94,5 +94,18 @@ describe('AirlineAirportService', () => {
 
         await expect(() => service.addAirportToAirline(newAirline.id, '0'))
             .rejects.toHaveProperty("message", "The airport with the given id was not found");
+    });
+
+    it('addAirportToAirline should throw an exception for an invalid airline', async () => {
+        const newAirport: AirportEntity = await airportRepository.save({
+            name: faker.company.name(),
+            code: faker.address.countryCode('alpha-3'),
+            country: faker.address.country(),
+            city: faker.address.cityName(),
+            airlines: []
+        });
+
+        await expect(() => service.addAirportToAirline('0', newAirport.id))
+            .rejects.toHaveProperty("message", "The airline with the given id was not found");
     });
 });
