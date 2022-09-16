@@ -55,4 +55,31 @@ describe('AirlineAirportService', () => {
     it('should be defined', () => {
         expect(service).toBeDefined();
     });
+
+    it('addAirportToAirline shoud add an airport to an airline', async () => {
+        const newAirport: AirportEntity = await airportRepository.save({
+            name: faker.company.name(),
+            code: faker.address.countryCode('alpha-3'),
+            country: faker.address.country(),
+            city: faker.address.cityName(),
+            airlines: []
+        });
+
+        const newAirline: AirlineEntity = await airlineRepository.save({
+            name: faker.company.name(),
+            description: faker.lorem.sentence(),
+            foundationDate: faker.date.past(),
+            webPage: faker.internet.url(),
+            airports: [],
+        });
+
+        const result: AirlineEntity = await service.addAirportToAirline(newAirline.id, newAirport.id);
+
+        expect(result.airports.length).toBe(1);
+        expect(result.airports[0]).not.toBeNull();
+        expect(result.airports[0].name).toBe(newAirport.name)
+        expect(result.airports[0].code).toBe(newAirport.code)
+        expect(result.airports[0].country).toBe(newAirport.country)
+        expect(result.airports[0].city).toBe(newAirport.city)
+    });
 });

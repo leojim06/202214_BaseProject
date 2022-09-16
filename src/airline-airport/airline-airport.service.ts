@@ -15,4 +15,8 @@ export class AirlineAirportService {
         private readonly airportRepository: Repository<AirportEntity>
     ) { }
 
+    async addAirportToAirline(airlineId: string, airportId: string): Promise<AirlineEntity> {
+        return null;
+    }
+
 }
