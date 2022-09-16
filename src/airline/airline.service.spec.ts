@@ -57,7 +57,7 @@ describe('AirlineService', () => {
         expect(airline.webPage).toEqual(storedAirline.webPage);
     });
 
-    it('findOne should throw an exception for an invalid airline', async () => {
+    it('findOne should throw an exception for an invalid airline id', async () => {
         await expect(() => service.findOne('0'))
             .rejects.toHaveProperty("message", "The airline with the given id was not found");
     });
@@ -110,5 +110,15 @@ describe('AirlineService', () => {
         expect(storedAirline).not.toBeNull();
         expect(storedAirline.name).toEqual(airline.name);
         expect(storedAirline.description).toEqual(airline.description);
+    });
+
+    it('update should throw an exception for an invalid airline id', async () => {
+        let airline: AirlineEntity = airlineList[0];
+        airline = {
+            ...airline, name: "New name", description: "New description"
+        };
+
+        await expect(() => service.update('0', airline))
+            .rejects.toHaveProperty("message", "The airline with the given id was not found");
     });
 });
