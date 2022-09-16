@@ -32,10 +32,13 @@ export class AirportService {
     }
 
     async update(id: string, airport: AirportEntity): Promise<AirportEntity> {
+        if (!this.airportCodeValidator.test(airport.code))
+            throw new BusinessLogicException("The airport code is incorrect", BusinessError.BAD_REQUEST)
+
         const persistedAirport: AirportEntity = await this.airportRepository.findOne({ where: { id } });
-        if(!persistedAirport)
+        if (!persistedAirport)
             throw new BusinessLogicException("The airport with the given id was not found", BusinessError.NOT_FOUND);
-        
+
         airport.id = persistedAirport.id;
         return await this.airportRepository.save(airport);
     }
