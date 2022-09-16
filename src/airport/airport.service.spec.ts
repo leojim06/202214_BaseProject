@@ -82,7 +82,7 @@ describe('AirportService', () => {
         expect(storedAirport.country).toEqual(newAirport.country);
         expect(storedAirport.city).toEqual(newAirport.city);
     });
-    
+
     it('create should throw an exception for an invalid airport code', async () => {
         const airport: AirportEntity = {
             id: "",
@@ -97,7 +97,7 @@ describe('AirportService', () => {
             .rejects.toHaveProperty("message", "The airport code is incorrect");
     });
 
-    it('update should modify an airport', async () => { 
+    it('update should modify an airport', async () => {
         let airport: AirportEntity = airportList[0];
         airport = {
             ...airport, name: "New name", country: "New country name"
@@ -122,7 +122,7 @@ describe('AirportService', () => {
             .rejects.toHaveProperty("message", "The airport with the given id was not found");
     });
 
-    it('should throw an exception for an invalid airport code', async () => {
+    it('update should throw an exception for an invalid airport code', async () => {
         let airport: AirportEntity = airportList[0];
         airport = {
             ...airport, code: "ABCDEFG"
@@ -130,5 +130,12 @@ describe('AirportService', () => {
 
         await expect(() => service.update(airport.id, airport))
             .rejects.toHaveProperty("message", "The airport code is incorrect");
+    });
+
+    it('delete should remove an airport', async () => { 
+        const airport: AirportEntity = airportList[0];
+        await service.delete(airport.id);
+        const deletedAirport: AirportEntity = await repository.findOne({ where: { id: airport.id } });
+        expect(deletedAirport).toBeNull();
     });
 });

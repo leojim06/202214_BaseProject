@@ -42,4 +42,7 @@ export class AirportService {
         airport.id = persistedAirport.id;
         return await this.airportRepository.save(airport);
     }
+
+    async delete(id: string) {
+    }
 }
