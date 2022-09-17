@@ -70,7 +70,9 @@ export class AirlineAirportService {
     }
 
     async deleteAirportFromAirline(airlineId: string, airportId: string) {
-
+        const airline: AirlineEntity = await this.airlineRepository.findOne({ where: { id: airlineId }, relations: ["airports"] });
+        airline.airports = airline.airports.filter(a => a.id !== airportId);
+        await this.airlineRepository.save(airline);
     }
 
 }
