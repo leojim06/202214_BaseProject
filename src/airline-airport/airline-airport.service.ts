@@ -54,4 +54,8 @@ export class AirlineAirportService {
         return airlineAirport;
     }
 
+    async updateAirportsFromAirline(airlineId: string, airports: AirportEntity[]): Promise<AirlineEntity> {
+        return null;
+    }
+
 }

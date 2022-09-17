@@ -153,4 +153,22 @@ describe('AirlineAirportService', () => {
             .rejects.toHaveProperty("message", "The airline with the given id was not found");
     });
 
+    it('updateAirportsFromAirline should update airports list for an airline', async () => {
+        const newAirport: AirportEntity = await airportRepository.save({
+            name: faker.company.name(),
+            code: faker.address.countryCode('alpha-3'),
+            country: faker.address.country(),
+            city: faker.address.cityName(),
+            airlines: []
+        });
+
+        const updatedAirline: AirlineEntity = await service.updateAirportsFromAirline(airline.id, [newAirport]);
+        expect(updatedAirline.airports.length).toBe(1);
+
+        expect(updatedAirline.airports[0].name).toBe(newAirport.name);
+        expect(updatedAirline.airports[0].code).toBe(newAirport.code);
+        expect(updatedAirline.airports[0].country).toBe(newAirport.country);
+        expect(updatedAirline.airports[0].city).toBe(newAirport.city);
+    });
+
 });
