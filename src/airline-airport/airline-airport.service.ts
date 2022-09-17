@@ -34,11 +34,14 @@ export class AirlineAirportService {
         if (!airline)
             throw new BusinessLogicException("The airline with the given id was not found", BusinessError.NOT_FOUND);
 
-        const airport: AirportEntity = airline.airports.find(a => a.id === airportId);
+        const airport: AirportEntity = await this.airportRepository.findOne({ where: { id: airportId } });
         if (!airport)
             throw new BusinessLogicException("The airport with the given id was not found", BusinessError.NOT_FOUND);
 
-        return airport;
-    }
+        const airlineAirport: AirportEntity = airline.airports.find(a => a.id === airport.id);
+        if (!airlineAirport)
+            throw new BusinessLogicException("The airport with the given id is not associated to the airline", BusinessError.PRECONDITION_FAILED);
 
+        return airlineAirport;
+    }
 }
