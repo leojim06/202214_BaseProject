@@ -29,11 +29,13 @@ export class AirlineAirportService {
         return await this.airlineRepository.save(airline);
     }
 
-    async findAirportsFromAirline(airlineId: string, airportId: string): Promise<AirportEntity>{
+    async findAirportsFromAirline(airlineId: string, airportId: string): Promise<AirportEntity> {
         const airline: AirlineEntity = await this.airlineRepository.findOne({ where: { id: airlineId }, relations: ["airports"] });
 
         const airport: AirportEntity = airline.airports.find(a => a.id === airportId);
-        
+        if (!airport)
+            throw new BusinessLogicException("The airport with the given id was not found", BusinessError.NOT_FOUND);
+
         return airport;
     }
 
