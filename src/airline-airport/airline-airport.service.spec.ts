@@ -108,4 +108,15 @@ describe('AirlineAirportService', () => {
         await expect(() => service.addAirportToAirline('0', newAirport.id))
             .rejects.toHaveProperty("message", "The airline with the given id was not found");
     });
+
+    it('findAirportsFromAirline should return airports by airline', async () => { 
+        const airport: AirportEntity = airportList[0];
+        const storedAirport: AirportEntity = await service.findAirportsFromAirline(airline.id, airport.id);
+        expect(storedAirport).not.toBeNull();
+        expect(storedAirport.name).toBe(airport.name);
+        expect(storedAirport.code).toBe(airport.code);
+        expect(storedAirport.country).toBe(airport.country);
+        expect(storedAirport.city).toBe(airport.city);
+    });
+
 });

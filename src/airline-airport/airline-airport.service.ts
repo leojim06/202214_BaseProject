@@ -29,4 +29,8 @@ export class AirlineAirportService {
         return await this.airlineRepository.save(airline);
     }
 
+    async findAirportsFromAirline(airlineId: string, airportId: string): Promise<AirportEntity>{
+        return null;
+    }
+
 }
