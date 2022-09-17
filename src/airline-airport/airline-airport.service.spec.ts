@@ -211,7 +211,7 @@ describe('AirlineAirportService', () => {
     it('deleteAirportFromAirline should throw an exception for an invalid airline', async () => {
         const airport: AirportEntity = airportList[0];
         await expect(() => service.deleteAirportFromAirline('0', airport.id))
-            .rejects.toHaveProperty("message", "The airport with the given id was not found");
+            .rejects.toHaveProperty("message", "The airline with the given id was not found");
     });
 
 });

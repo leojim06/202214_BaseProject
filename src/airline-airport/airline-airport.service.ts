@@ -71,6 +71,8 @@ export class AirlineAirportService {
 
     async deleteAirportFromAirline(airlineId: string, airportId: string) {
         const airline: AirlineEntity = await this.airlineRepository.findOne({ where: { id: airlineId }, relations: ["airports"] });
+        if (!airline)
+            throw new BusinessLogicException("The airline with the given id was not found", BusinessError.NOT_FOUND);
 
         const airport: AirportEntity = await this.airportRepository.findOne({ where: { id: airportId } });
         if (!airport)
