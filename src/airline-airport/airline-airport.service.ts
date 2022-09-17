@@ -30,7 +30,11 @@ export class AirlineAirportService {
     }
 
     async findAirportsFromAirline(airlineId: string, airportId: string): Promise<AirportEntity>{
-        return null;
+        const airline: AirlineEntity = await this.airlineRepository.findOne({ where: { id: airlineId }, relations: ["airports"] });
+
+        const airport: AirportEntity = airline.airports.find(a => a.id === airportId);
+        
+        return airport;
     }
 
 }
