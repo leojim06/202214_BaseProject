@@ -214,4 +214,17 @@ describe('AirlineAirportService', () => {
             .rejects.toHaveProperty("message", "The airline with the given id was not found");
     });
 
+    it('deleteAirportFromAirline should throw an exception for airport not associated to the airline', async () => {
+        const newAirport: AirportEntity = await airportRepository.save({
+            name: faker.company.name(),
+            code: faker.address.countryCode('alpha-3'),
+            country: faker.address.country(),
+            city: faker.address.cityName(),
+            airlines: []
+        });
+
+        await expect(() => service.deleteAirportFromAirline(airline.id, newAirport.id))
+            .rejects.toHaveProperty("message", "The airport with the given id is not associated to the airline");
+    });
+
 });
