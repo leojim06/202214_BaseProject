@@ -184,4 +184,12 @@ describe('AirlineAirportService', () => {
             .rejects.toHaveProperty("message", "The airline with the given id was not found")
     });
 
+    it('updateAirportsFromAirline should throw an exception for an invalid airport', async () => { 
+        const newAirport: AirportEntity = airportList[0];
+        newAirport.id = "0";
+
+        await expect(() => service.updateAirportsFromAirline(airline.id, [newAirport]))
+            .rejects.toHaveProperty("message", "The airport with the given id was not found");
+    });
+
 });
