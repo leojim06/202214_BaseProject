@@ -203,4 +203,9 @@ describe('AirlineAirportService', () => {
         expect(deletedAirport).toBeUndefined();
     });
 
+    it('deleteAirportFromAirline should throw an exception for an invalid airport', async () => {
+        await expect(() => service.deleteAirportFromAirline(airline.id, '0'))
+            .rejects.toHaveProperty("message", "The airport with the given id was not found");
+    });
+
 });
