@@ -184,12 +184,23 @@ describe('AirlineAirportService', () => {
             .rejects.toHaveProperty("message", "The airline with the given id was not found")
     });
 
-    it('updateAirportsFromAirline should throw an exception for an invalid airport', async () => { 
+    it('updateAirportsFromAirline should throw an exception for an invalid airport', async () => {
         const newAirport: AirportEntity = airportList[0];
         newAirport.id = "0";
 
         await expect(() => service.updateAirportsFromAirline(airline.id, [newAirport]))
             .rejects.toHaveProperty("message", "The airport with the given id was not found");
+    });
+
+    it('deleteAirportFromAirline should remove an airport from a airline', async () => {
+        const airport: AirportEntity = airportList[0];
+
+        await service.deleteAirportFromAirline(airline.id, airport.id);
+
+        const storedAirline: AirlineEntity = await airlineRepository.findOne({ where: { id: airline.id }, relations: ["airports"] });
+        const deletedAirport: AirportEntity = storedAirline.airports.find(a => a.id === airport.id);
+
+        expect(deletedAirport).toBeUndefined();
     });
 
 });

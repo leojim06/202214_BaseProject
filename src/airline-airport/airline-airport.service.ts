@@ -69,4 +69,8 @@ export class AirlineAirportService {
         return await this.airlineRepository.save(airline);
     }
 
+    async deleteAirportFromAirline(airlineId: string, airportId: string) {
+
+    }
+
 }
