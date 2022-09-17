@@ -148,4 +148,9 @@ describe('AirlineAirportService', () => {
         expect(airports.length).toBe(5);
     });
 
+    it('findAirportsFromAirline should throw an exception for an invalid airline', async () => {
+        await expect(() => service.findAirportsFromAirline('0'))
+            .rejects.toHaveProperty("message", "The airline with the given id was not found");
+    });
+
 });
