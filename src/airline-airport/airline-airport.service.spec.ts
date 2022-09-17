@@ -109,9 +109,9 @@ describe('AirlineAirportService', () => {
             .rejects.toHaveProperty("message", "The airline with the given id was not found");
     });
 
-    it('findAirportsFromAirline should return airports by airline', async () => {
+    it('findAirportFromAirline should return airports by airline', async () => {
         const airport: AirportEntity = airportList[0];
-        const storedAirport: AirportEntity = await service.findAirportsFromAirline(airline.id, airport.id);
+        const storedAirport: AirportEntity = await service.findAirportFromAirline(airline.id, airport.id);
         expect(storedAirport).not.toBeNull();
         expect(storedAirport.name).toBe(airport.name);
         expect(storedAirport.code).toBe(airport.code);
@@ -119,18 +119,18 @@ describe('AirlineAirportService', () => {
         expect(storedAirport.city).toBe(airport.city);
     });
 
-    it('findAirportsFromAirline should throw an exception for an invalid airport', async () => {
-        await expect(() => service.findAirportsFromAirline(airline.id, '0'))
+    it('findAirportFromAirline should throw an exception for an invalid airport', async () => {
+        await expect(() => service.findAirportFromAirline(airline.id, '0'))
             .rejects.toHaveProperty("message", "The airport with the given id was not found")
     });
 
-    it('findAirportsFromAirline should throw an exception for an invalid airline', async () => {
+    it('findAirportFromAirline should throw an exception for an invalid airline', async () => {
         const airport: AirportEntity = airportList[0];
-        await expect(() => service.findAirportsFromAirline('0', airport.id))
+        await expect(() => service.findAirportFromAirline('0', airport.id))
             .rejects.toHaveProperty("message", "The airline with the given id was not found")
     });
 
-    it('findAirportsFromAirline should throw an exception for airport not associated to the airline', async () => {
+    it('findAirportFromAirline should throw an exception for airport not associated to the airline', async () => {
         const newAirport: AirportEntity = await airportRepository.save({
             name: faker.company.name(),
             code: faker.address.countryCode('alpha-3'),
@@ -139,8 +139,13 @@ describe('AirlineAirportService', () => {
             airlines: []
         });
 
-        await expect(() => service.findAirportsFromAirline(airline.id, newAirport.id))
+        await expect(() => service.findAirportFromAirline(airline.id, newAirport.id))
             .rejects.toHaveProperty("message", "The airport with the given id is not associated to the airline");
+    });
+
+    it('findAirportsFromAirline should return airports by airline', async () => {
+        const airports: AirportEntity[] = await service.findAirportsFromAirline(airline.id);
+        expect(airports.length).toBe(5);
     });
 
 });
