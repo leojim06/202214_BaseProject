@@ -6,9 +6,10 @@ import { AirportModule } from './airport/airport.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AirlineEntity } from './airline/airline.entity';
 import { AirportEntity } from './airport/airport.entity';
+import { AirlineAirportModule } from './airline-airport/airline-airport.module';
 
 @Module({
-  imports: [AirlineModule, AirportModule,
+  imports: [AirlineModule, AirportModule, AirlineAirportModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
