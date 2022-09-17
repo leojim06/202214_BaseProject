@@ -171,7 +171,7 @@ describe('AirlineAirportService', () => {
         expect(updatedAirline.airports[0].city).toBe(newAirport.city);
     });
 
-    it('updateAirportsFromAirline should throw an exception for an invalid airline', async () => { 
+    it('updateAirportsFromAirline should throw an exception for an invalid airline', async () => {
         const newAirport: AirportEntity = await airportRepository.save({
             name: faker.company.name(),
             code: faker.address.countryCode('alpha-3'),

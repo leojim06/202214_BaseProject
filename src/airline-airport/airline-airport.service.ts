@@ -56,6 +56,9 @@ export class AirlineAirportService {
 
     async updateAirportsFromAirline(airlineId: string, airports: AirportEntity[]): Promise<AirlineEntity> {
         const airline: AirlineEntity = await this.airlineRepository.findOne({ where: { id: airlineId }, relations: ["airports"] });
+        if (!airline)
+            throw new BusinessLogicException("The airline with the given id was not found", BusinessError.NOT_FOUND);
+
         airline.airports = airports;
         return await this.airlineRepository.save(airline);
     }
